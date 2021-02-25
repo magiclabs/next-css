@@ -1,3 +1,15 @@
+# v0.2.0 (Thu Feb 25 2021)
+
+#### 🚀 Enhancement
+
+- Improve README and add LICENSE references to borrowed files [#3](https://github.com/magiclabs/next-css/pull/3) ([@smithki](https://github.com/smithki))
+
+#### Authors: 1
+
+- Ian K Smith ([@smithki](https://github.com/smithki))
+
+---
+
 # v0.1.2 (Thu Feb 25 2021)
 
 #### ⚠️ Pushed to `main`
