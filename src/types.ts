@@ -17,7 +17,7 @@ export interface NextWebpackContext {
   dir: string;
   dev: boolean;
   isServer: boolean;
-  buildID: string;
+  buildId: string;
   config: NextConfig;
   defaultLoaders?: any;
   totalPages: number;
