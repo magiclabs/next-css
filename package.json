@@ -34,7 +34,8 @@
     "postcss": "8.1.7",
     "postcss-flexbugs-fixes": "4.2.1",
     "postcss-loader": "4.0.3",
-    "postcss-preset-env": "6.7.0"
+    "postcss-preset-env": "6.7.0",
+    "wrap-ansi": "^7.0.0"
   },
   "devDependencies": {
     "@ikscodes/eslint-config": "^7.0.2",

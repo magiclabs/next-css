@@ -56,7 +56,7 @@ const genericErrorText = 'Malformed PostCSS configuration';
 function getError_NullConfig(pluginName: string) {
   return createMessage(
     'error',
-    chalk`Your PostCSS configuration for '${pluginName}' cannot have {bold 'null'} configuration.\nTo disable '${pluginName}', pass {bold 'false'}, otherwise, pass {bold 'true'} or a configuration object.`,
+    chalk`Your PostCSS configuration for '${pluginName}' cannot have {bold null or undefined} configuration.\nTo disable '${pluginName}', pass {bold false}, otherwise, pass {bold true} or a configuration object.`,
   );
 }
 
@@ -184,7 +184,10 @@ export function getPostCssPlugins(dir: string, isProduction: boolean): readonly 
   const parsed: CssPluginShape[] = [];
   plugins.forEach((plugin) => {
     if (plugin == null) {
-      printMessage('warning', chalk`A {bold 'null'} PostCSS plugin was provided. This entry will be ignored.`);
+      printMessage(
+        'warning',
+        chalk`A {bold null or undefined} PostCSS plugin was provided. This entry will be ignored.`,
+      );
     } else if (typeof plugin === 'string') {
       parsed.push([plugin, true]);
     } else if (Array.isArray(plugin)) {

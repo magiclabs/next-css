@@ -20,7 +20,7 @@ export function validatePluginConfiguration(
     if (webpackContext.isServer) {
       printMessage(
         'warning',
-        chalk`The value given to {bold preProcessors} is {bold 'null' or 'undefined'}. This may not be intentional. Without configuration, only plain CSS will be parsed by Webpack (in which case, the usage of this plugin is unnecessary).`,
+        chalk`The value given to {bold preProcessors} is {bold null or undefined}. This may not be intentional. Without configuration, only plain CSS will be parsed by Webpack (in which case, the usage of this plugin is unnecessary).`,
       );
     }
     return [];
@@ -45,19 +45,20 @@ export function validatePluginConfiguration(
 
     if (Array.isArray(pluginConfig.preProcessors)) {
       for (const [i, item] of Object.entries(pluginConfig.preProcessors)) {
+        const styledI = chalk`{cyan ${i}}`;
         const codeRefs = {
           use: isFromFactory
-            ? chalk`{bold \`preProcessors() => [${i}].use\`}`
-            : chalk`{bold \`preProcessors[${i}].use\`}`,
+            ? chalk`{bold preProcessors() => [{cyan ${i}}].use}`
+            : chalk`{bold preProcessors[{cyan ${i}}].use}`,
           extensions: isFromFactory
-            ? chalk`{bold \`preProcessors() => [${i}].extensions\`}`
-            : chalk`{bold \`preProcessors[${i}].extensions\`}`,
+            ? chalk`{bold preProcessors() => [{cyan ${i}}].extensions}`
+            : chalk`{bold preProcessors[{cyan ${i}}].extensions}`,
         };
 
         // Make sure `use` is defined.
         if (item.use == null) {
           raiseValidationError(
-            chalk`The value given to ${codeRefs.use} is {bold 'null' or 'undefined'}. Please provide an array of objects to configure your additional loaders.`,
+            chalk`The value given to ${codeRefs.use} is {bold null or undefined}. Please provide an array of objects to configure your additional loaders.`,
             'https://webpack.js.org/configuration/module/#rule',
           );
         }
@@ -89,7 +90,7 @@ export function validatePluginConfiguration(
         // Make sure `extensions` is defined.
         if (item.extensions == null) {
           raiseValidationError(
-            chalk`The value given to ${codeRefs.extensions} is {bold 'null' or 'undefined'}. Please provide an array of strings to configure additional CSS pre-processor extensions.`,
+            chalk`The value given to ${codeRefs.extensions} is {bold null or undefined}. Please provide an array of strings to configure additional CSS pre-processor extensions.`,
           );
         }
 
@@ -103,7 +104,7 @@ export function validatePluginConfiguration(
         // Make sure `extensions` is an array.
         if (!Array.isArray(item.extensions)) {
           raiseValidationError(
-            chalk`The value given to ${codeRefs.extensions} is not an array. Please provide an array of stirngs to configure additional CSS pre-processor extensions.`,
+            chalk`The value given to ${codeRefs.extensions} is not an array. Please provide an array of strings to configure additional CSS pre-processor extensions.`,
           );
         }
 
@@ -117,9 +118,10 @@ export function validatePluginConfiguration(
         // Make sure all values in `extensions` array are strings.
         for (const [j, ext] of Object.entries(item.extensions)) {
           if (typeof ext !== 'string') {
+            const styledJ = chalk`{cyan ${j}}`;
             const codeRef = isFromFactory
-              ? chalk`{bold \`preProcessors() => [${i}].extensions[${j}]\`}`
-              : chalk`{bold \`preProcessors[${i}].extensions[${j}]\`}`;
+              ? chalk`{bold preProcessors() => [${styledI}].extensions[${styledJ}]}`
+              : chalk`{bold preProcessors[${styledI}].extensions[${styledJ}]}`;
 
             raiseValidationError(
               chalk`The value given to ${codeRef} is not a string. Please provide pre-processor extensions as strings.`,
