@@ -1,6 +1,6 @@
 {
   "name": "@magiclabs/next-css",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Feature-parity with NextJS built-in CSS, but with the added flexibility to support the pre-processor of your choice.",
   "author": "Magic Labs <open-source@magic.link>",
   "license": "MIT",
