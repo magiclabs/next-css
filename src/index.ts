@@ -3,7 +3,7 @@
 
 import type webpack from 'webpack';
 import type { NextWebpackContext } from './types';
-import { configureCSS, ConfigureCSSOptions, PreprocessorItem } from './configuration';
+import { configureCSS, ConfigureCSSOptions, PreProcessorItem } from './configuration';
 import { findCustomAppFile } from './utils/find-custom-app-file';
 import { validatePluginConfiguration } from './utils/validate-plugin-configuration';
 
@@ -49,4 +49,4 @@ export function withCSS<T extends Record<string, any> = Record<string, any>>(
   };
 }
 
-export { PreprocessorItem };
+export { PreProcessorItem as PreprocessorItem };
