@@ -14,6 +14,7 @@
     "start": "yarn clean && tsc -w",
     "build": "yarn clean && tsc",
     "lint": "eslint --fix src/**/*.ts",
+    "test": "echo \"No unit tests... yet :(\" && exit 0",
     "clean": "rimraf dist",
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
