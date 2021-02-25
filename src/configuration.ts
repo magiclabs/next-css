@@ -274,8 +274,8 @@ export function configureCSS(config: webpack.Configuration, ctx: ConfigureCSSOpt
     addPlugin(
       config,
       new ExtractCssPlugin({
-        filename: 'static/css/[id].css',
-        chunkFilename: 'static/css/[id].css',
+        filename: 'static/css/[contenthash].css',
+        chunkFilename: 'static/css/[contenthash].css',
         // Next.js guarantees that CSS order "doesn't matter" (and so must we),
         // due to imposed restrictions:
         //
