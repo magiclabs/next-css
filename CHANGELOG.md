@@ -1,3 +1,16 @@
+# v0.2.3 (Thu Feb 25 2021)
+
+#### ⚠️ Pushed to `main`
+
+- Merge branch 'main' of https://github.com/magiclabs/next-css into main ([@smithki](https://github.com/smithki))
+- Improve error message formatting ([@smithki](https://github.com/smithki))
+
+#### Authors: 1
+
+- Ian K Smith ([@smithki](https://github.com/smithki))
+
+---
+
 # v0.2.2 (Thu Feb 25 2021)
 
 #### ⚠️ Pushed to `main`
