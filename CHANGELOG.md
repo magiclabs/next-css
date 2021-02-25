@@ -1,3 +1,16 @@
+# v0.2.1 (Thu Feb 25 2021)
+
+#### ⚠️ Pushed to `main`
+
+- Merge branch 'main' of https://github.com/magiclabs/next-css into main ([@smithki](https://github.com/smithki))
+- Use [contenthash] in CSS filename output ([@smithki](https://github.com/smithki))
+
+#### Authors: 1
+
+- Ian K Smith ([@smithki](https://github.com/smithki))
+
+---
+
 # v0.2.0 (Thu Feb 25 2021)
 
 #### 🚀 Enhancement
