@@ -1,6 +1,6 @@
-# Better CSS Support for NextJS
+# ▲ + 💅 Better CSS Support for NextJS
 
-> Feature-parity with NextJS built-in CSS, but with the added flexibility to support the pre-processor of your choice.
+> Feature-parity with NextJS's built-in CSS with the flexibility to support your favorite pre-processor(s)!
 
 <p align="center">
   <a href="./LICENSE">License</a> ·
@@ -30,7 +30,7 @@ This module requires NextJS (`^9.5.4 || ^10.0.0`) as a **peer dependency**. Addi
 
 The stylesheet is compiled to `.next/static/css`. Next.js will automatically add the css file to the HTML. In production, a chunk hash is added so that styles are updated when a new version of the stylesheet is deployed.
 
-### Configuration
+### Basic Configuration
 
 Create a `next.config.js` in the root of your project (next to `pages/` and `package.json`).
 
@@ -53,6 +53,18 @@ module.exports = withCSS({
 });
 ```
 
+#### Configuration Fields
+
+- `preProcessors`: An array of `PreProcessorItem` objects, or a function returning an array of `PreProcessorItem` objects with the following shape:
+    - `extensions`: An array of `String` values representing CSS file extensions (i.e.: `"css"`, `"less"`, `"scss"`).
+    - `use`: An array of objects compatible with [Webpack's Module Rules#UseEntry schema](https://webpack.js.org/configuration/module/#useentry).
+
+## ⚡️ Quick Starts
+
+You can easily configure `@magiclabs/next-css` for the following common use-cases:
+
+- [LESS](#with-less)
+
 ### With [LESS](http://lesscss.org)
 
 First, install your LESS-specific dependencies:
@@ -72,7 +84,6 @@ Next, configure the pre-processor with `@magiclabs/next-css`:
 const { withCSS } = require('@magiclabs/next-css');
 
 module.exports = withCSS({
-  // Array of objects configuring any CSS pre-processors you like!
   preProcessors: [
     {
       extensions: ["less"],
@@ -84,6 +95,8 @@ module.exports = withCSS({
 
 ## ⚖️ Trade-offs
 
-- More dependencies leads to longer NPM package installation times.
-- As this is a re-implementation of NextJS CSS support, there may be some inconsistencies between the end results. NextJS benefits from aggressive internal optimizations which may be missing or unaccounted for here. However, we try our best to match the internal implementation as closely as possible.
+- More dependencies leads to longer NPM package installation times. These are _marginal_ for a typical project.
+
+- This is a wholesale re-implementation of NextJS CSS support, so there may be some inconsistencies between the end results. NextJS notably benefits from aggressive internal optimizations which may be missing or unaccounted for here. That being said, we try our best to match the internal implementation as closely as possible.
+
 - Currently, only **Webpack V4** is officially supported. Whenever NextJS updates to support Webpack V5 by default, `@magiclabs/next-css` will be updated as well.

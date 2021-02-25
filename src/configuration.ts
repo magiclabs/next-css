@@ -1,3 +1,38 @@
+/*
+  The MIT License (MIT)
+
+  Copyright (c) 2021 Vercel, Inc.
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+ */
+
+/**
+ * @see https://github.com/vercel/next.js/blob/b90b4b503c4444507595be0f9e0edd8a19ea2254/packages/next/build/webpack/config/blocks/css/index.ts
+ *
+ * Modifications:
+ *   - Remove curried functions
+ *   - Add additional loaders for each configured pre-processor
+ *   - Use own dependencies (remove `next/dist/compiled/*` dependencies)
+ *   - Use own implementation for `getCssModuleLoader`, `getGlobalCssLoader`
+ *   - Use own implementation for `getPostCssPlugins`
+ */
+
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 import path from 'path';
@@ -11,22 +46,22 @@ import { ConfigurationContext } from './types';
 import { getPostCssPlugins } from './postcss';
 import { createMessage } from './utils/errors-warnings';
 
-export interface PreprocessorItem {
+export interface PreProcessorItem {
   extensions: string[];
   use: webpack.RuleSetUseItem[];
 }
 
-interface PreprocessorItemWithRegExps extends PreprocessorItem {
+interface PreProcessorItemWithRegExps extends PreProcessorItem {
   global: RegExp;
   modules: RegExp;
 }
 
 export interface ConfigureCSSOptions {
-  preProcessors: PreprocessorItem[];
+  preProcessors: PreProcessorItem[];
 }
 
 export function configureCSS(config: webpack.Configuration, ctx: ConfigureCSSOptions & ConfigurationContext) {
-  const preprocessorConfigs: PreprocessorItemWithRegExps[] = [
+  const preProcessorConfigs: PreProcessorItemWithRegExps[] = [
     {
       extensions: ['css'],
       use: [],
@@ -36,7 +71,7 @@ export function configureCSS(config: webpack.Configuration, ctx: ConfigureCSSOpt
   ];
 
   for (const item of ctx.preProcessors) {
-    preprocessorConfigs.push({
+    preProcessorConfigs.push({
       extensions: item.extensions,
       use: item.use,
       global: new RegExp(`(?<!\\.module)\\.(${[...item.extensions].join('|')})$`),
@@ -85,7 +120,7 @@ export function configureCSS(config: webpack.Configuration, ctx: ConfigureCSSOpt
     ],
   });
 
-  for (const item of preprocessorConfigs) {
+  for (const item of preProcessorConfigs) {
     addLoader(config, {
       oneOf: [
         {
@@ -111,7 +146,7 @@ export function configureCSS(config: webpack.Configuration, ctx: ConfigureCSSOpt
   addLoader(config, {
     oneOf: [
       {
-        test: preprocessorConfigs.map((re) => re.modules),
+        test: preProcessorConfigs.map((re) => re.modules),
         use: {
           loader: 'error-loader',
           options: {
@@ -126,7 +161,7 @@ export function configureCSS(config: webpack.Configuration, ctx: ConfigureCSSOpt
     addLoader(config, {
       oneOf: [
         {
-          test: preprocessorConfigs.map((re) => re.global),
+          test: preProcessorConfigs.map((re) => re.global),
           use: require.resolve('ignore-loader'),
         },
       ],
@@ -140,7 +175,7 @@ export function configureCSS(config: webpack.Configuration, ctx: ConfigureCSSOpt
           // no side-effects.
           // See https://github.com/webpack/webpack/issues/6571
           sideEffects: true,
-          test: preprocessorConfigs[0].global,
+          test: preProcessorConfigs[0].global,
           // We only allow Global CSS to be imported anywhere in the
           // application if it comes from node_modules. This is a best-effort
           // heuristic that makes a safety trade-off for better
@@ -160,7 +195,7 @@ export function configureCSS(config: webpack.Configuration, ctx: ConfigureCSSOpt
     });
 
     if (ctx.customAppFile) {
-      for (const item of preprocessorConfigs) {
+      for (const item of preProcessorConfigs) {
         addLoader(config, {
           oneOf: [
             {
@@ -183,7 +218,7 @@ export function configureCSS(config: webpack.Configuration, ctx: ConfigureCSSOpt
   addLoader(config, {
     oneOf: [
       {
-        test: preprocessorConfigs.map((item) => item.global),
+        test: preProcessorConfigs.map((item) => item.global),
         issuer: { and: [/node_modules/] },
         use: {
           loader: 'error-loader',
@@ -199,7 +234,7 @@ export function configureCSS(config: webpack.Configuration, ctx: ConfigureCSSOpt
   addLoader(config, {
     oneOf: [
       {
-        test: preprocessorConfigs.map((item) => item.global),
+        test: preProcessorConfigs.map((item) => item.global),
         use: {
           loader: 'error-loader',
           options: {
