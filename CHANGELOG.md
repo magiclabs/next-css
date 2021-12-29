@@ -1,3 +1,15 @@
+# v1.0.0 (Wed Dec 29 2021)
+
+#### 💥 Breaking Change
+
+- NextJS 12 & Webpack 5 support [#4](https://github.com/magiclabs/next-css/pull/4) ([@smithki](https://github.com/smithki))
+
+#### Authors: 1
+
+- Ian K Smith ([@smithki](https://github.com/smithki))
+
+---
+
 # v0.2.3 (Thu Feb 25 2021)
 
 #### ⚠️ Pushed to `main`
