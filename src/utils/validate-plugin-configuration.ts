@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import type webpack from 'webpack';
 import type { PluginConfiguration, PreprocessorItem } from '../index';
 import type { NextWebpackContext } from '../types';
-import { printMessage } from './errors-warnings';
+import { printMessage } from './messages';
 
 function raiseValidationError(message: string, helpLink?: string) {
   printMessage('error', message, helpLink);
