@@ -41,7 +41,7 @@ import type { AcceptedPlugin } from 'postcss';
 import chalk from 'chalk';
 import browserslist from 'browserslist';
 import { findConfig } from './utils/find-config';
-import { createMessage, printMessage } from './utils/errors-warnings';
+import { createMessage, printMessage } from './utils/messages';
 
 type CssPluginCollection_Array = (string | [string, boolean | object])[];
 

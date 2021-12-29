@@ -63,8 +63,8 @@ export function getCssModuleLoader(
       sourceMap: true,
       // Use CJS mode for backwards compatibility:
       esModule: false,
-      url: cssFileResolve,
-      import: cssFileResolve,
+      url: { filter: cssFileResolve },
+      import: { filter: cssFileResolve },
       modules: {
         // Do not transform class names (CJS mode backwards compatibility):
         exportLocalsConvention: 'asIs',
@@ -112,8 +112,8 @@ export function getGlobalCssLoader(
       importLoaders: 1 + preProcessors.length,
       sourceMap: true,
       modules: false,
-      url: cssFileResolve,
-      import: cssFileResolve,
+      url: { filter: cssFileResolve },
+      import: { filter: cssFileResolve },
     },
   });
 

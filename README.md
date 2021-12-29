@@ -24,7 +24,7 @@ yarn add @magiclabs/next-css
 
 ### Peer Dependencies
 
-This module requires NextJS (`^9.5.4 || ^10.0.0`) as a **peer dependency**. Additionally, any Webpack dependencies related to your CSS pre-processor of choice are required to be installed separately.
+This module requires NextJS (`^12.0.0`) as a **peer dependency**. Additionally, any Webpack dependencies related to your CSS pre-processor of choice are required to be installed separately.
 
 ## 📚 Usage
 
@@ -98,5 +98,3 @@ module.exports = withCSS({
 - More dependencies leads to longer NPM package installation times. These are _marginal_ for a typical project.
 
 - This is a wholesale re-implementation of NextJS CSS support, so there may be some inconsistencies between the end results. NextJS notably benefits from aggressive internal optimizations which may be missing or unaccounted for here. That being said, we try our best to match the internal implementation as closely as possible.
-
-- Currently, only **Webpack V4** is officially supported. Whenever NextJS updates to support Webpack V5 by default, `@magiclabs/next-css` will be updated as well.

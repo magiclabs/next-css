@@ -44,7 +44,7 @@ import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import { getCssModuleLoader, getGlobalCssLoader } from './css-loaders';
 import { ConfigurationContext } from './types';
 import { getPostCssPlugins } from './postcss';
-import { createMessage } from './utils/errors-warnings';
+import { createMessage } from './utils/messages';
 
 export interface PreProcessorItem {
   extensions: string[];
@@ -293,18 +293,7 @@ export function configureCSS(config: webpack.Configuration, ctx: ConfigureCSSOpt
     );
   }
 
-  config.optimization?.minimizer?.push(
-    new CssMinimizerPlugin({
-      sourceMap: {
-        // `inline: false` generates the source map in a separate file.
-        // Otherwise, the CSS file is needlessly large.
-        inline: false,
-        // `annotation: false` skips appending the `sourceMappingURL`
-        // to the end of the CSS file. Webpack already handles this.
-        annotation: false,
-      },
-    }),
-  );
+  config.optimization?.minimizer?.push(new CssMinimizerPlugin());
 }
 
 // --- Webpack configuration helpers
@@ -314,16 +303,19 @@ function addLoader(config: webpack.Configuration, rule: webpack.RuleSetRule) {
   // NextJS populates built-in CSS loaders before plugins.
 
   if (rule.oneOf) {
-    const existing = config.module!.rules.find(
-      (arrayRule) => arrayRule.oneOf && (arrayRule.oneOf?.[0]?.options as any)?.__is_magiclabs_next_css,
+    const existing = config.module!.rules!.find(
+      (arrayRule) =>
+        typeof arrayRule !== 'string' &&
+        arrayRule.oneOf &&
+        (arrayRule.oneOf?.[0]?.options as any)?.__is_magiclabs_next_css,
     );
-    if (existing) {
+    if (existing && typeof existing !== 'string') {
       existing.oneOf!.push(...rule.oneOf);
       return config;
     }
   }
 
-  config.module!.rules.push(rule);
+  config.module!.rules!.push(rule);
   return config;
 }
 

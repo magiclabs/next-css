@@ -1,4 +1,4 @@
-import type { NextConfig } from 'next/dist/next-server/server/config';
+import type { NextConfig } from 'next';
 
 export interface ConfigurationContext {
   rootDirectory: string;
